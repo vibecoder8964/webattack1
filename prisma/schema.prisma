@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  password     String
+  email        String?
+  role         String   @default("customer")
+  blogUrl      String?  @map("blog_url")
+  twoFaEnabled Boolean  @default(false) @map("two_fa_enabled")
+  twoFaSecret  String?  @map("two_fa_secret")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("users")
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  price       Float
+  category    String
+  image       String?
+  released    Boolean  @default(true)
+  stock       Int      @default(0)
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("products")
+}
+
+model Session {
+  id            String   @id @default(cuid())
+  userId        Int      @map("user_id")
+  twoFaVerified Boolean  @default(false) @map("two_fa_verified")
+  isAdmin       Boolean  @default(false) @map("is_admin")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("sessions")
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  productId Int      @map("product_id")
+  userId    Int      @map("user_id")
+  rating    Int
+  title     String
+  content   String
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("reviews")
+}
+
+model ChatMessage {
+  id        Int      @id @default(autoincrement())
+  sessionId String   @map("session_id")
+  userId    Int?     @map("user_id")
+  sender    String   // "customer" or "support"
+  message   String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("chat_messages")
+}
+
+model Order {
+  id           Int      @id @default(autoincrement())
+  userId       Int      @map("user_id")
+  status       String   @default("pending")
+  total        Float
+  items        String   // JSON string of order items
+  shippingAddr String?  @map("shipping_addr")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("orders")
+}

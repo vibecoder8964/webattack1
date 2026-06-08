@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+Disallow: /admin-panel-x7k9m
+Disallow: /api/
+Disallow: /blog/admin-secret-2024
+Disallow: /search
+Disallow: /checkout
+Disallow: /cart
+Disallow: /account/settings
+Disallow: /wishlist
+Disallow: /api/internal-admin
+Disallow: /tmp/
+Disallow: /internal/
+Disallow: /debug/
+Disallow: /staging/
+Disallow: /admin/
+Disallow: /backup/
+Disallow: /test/
+
+# ShopZone - Online Shopping
+# Sitemap: https://shopzone.com/sitemap.xml
+# Last updated: 2024-04-15
+# Contact: webmaster@shopzone.com
